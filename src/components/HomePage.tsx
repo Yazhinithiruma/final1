@@ -27,7 +27,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         marginRight: 'calc(-50vw + 50%)'
       }}>
         <h1 className="cds--productive-heading-06">
-          AI-Powered Teradata to DB2 Migration Automation
+        TEL GDC Migration Automation
         </h1>
         <p className="cds--body-long-02" style={{ marginTop: '1rem', color: '#e5f6ff' }}>
           Streamline your database and DataStage migration process with our intelligent automation platform

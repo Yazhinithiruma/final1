@@ -121,7 +121,7 @@ const LoginPage: React.FC = () => {
           fontSize: '12px',
           color: '#525252'
         }}>
-          © 2024 IBM Corporation. All rights reserved.
+          © 2025 IBM Corporation. All rights reserved.
         </p>
       </div>
     </div>
