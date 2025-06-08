@@ -7,7 +7,7 @@ import {
   Button,
   ClickableTile,
 } from '@carbon/react';
-import { DataBase, Flow } from '@carbon/icons-react';
+import { DataBase, Flow, CheckmarkOutline, Move } from '@carbon/icons-react';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
@@ -27,7 +27,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         marginRight: 'calc(-50vw + 50%)'
       }}>
         <h1 className="cds--productive-heading-06">
-        TEL GDC Migration Automation
+          TEL GDC Migration Automation
         </h1>
         <p className="cds--body-long-02" style={{ marginTop: '1rem', color: '#e5f6ff' }}>
           Streamline your database and DataStage migration process with our intelligent automation platform
@@ -69,7 +69,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                   <div style={{ textAlign: 'center', flex: 1 }}>
                     <DataBase size={48} style={{ color: '#0f62fe', marginBottom: '1rem' }} />
                     <h3 className="cds--productive-heading-04" style={{ marginBottom: '1rem' }}>
-                      Database Migration
+                      Database Modernization
                     </h3>
                     <p className="cds--body-long-01" style={{ color: '#525252', marginBottom: '2rem' }}>
                       Migrate your Teradata database schemas, tables, views, and stored procedures 
@@ -78,7 +78,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                   </div>
                   <div style={{ textAlign: 'center' }}>
                     <Button kind="primary" size="md">
-                      Start Database Migration
+                      Start Database Modernization
                     </Button>
                   </div>
                 </ClickableTile>
@@ -101,7 +101,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                   <div style={{ textAlign: 'center', flex: 1 }}>
                     <Flow size={48} style={{ color: '#0f62fe', marginBottom: '1rem' }} />
                     <h3 className="cds--productive-heading-04" style={{ marginBottom: '1rem' }}>
-                      DataStage Migration
+                      DataStage Modernization
                     </h3>
                     <p className="cds--body-long-01" style={{ color: '#525252', marginBottom: '2rem' }}>
                       Convert and migrate your ETL processes from various platforms including 
@@ -110,7 +110,71 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                   </div>
                   <div style={{ textAlign: 'center' }}>
                     <Button kind="primary" size="md">
-                      Start DataStage Migration
+                      Start DataStage Modernization
+                    </Button>
+                  </div>
+                </ClickableTile>
+              </Column>
+
+              <Column lg={8} md={4} sm={4} style={{ marginBottom: '2rem' }}>
+                <ClickableTile
+                  className="card-shadow"
+                  style={{ 
+                    height: '350px', 
+                    padding: '2rem',
+                    backgroundColor: 'white',
+                    border: '1px solid #e0e0e0',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                  }}
+                  onClick={() => onNavigate('data-validation')}
+                >
+                  <div style={{ textAlign: 'center', flex: 1 }}>
+                    <CheckmarkOutline size={48} style={{ color: '#0f62fe', marginBottom: '1rem' }} />
+                    <h3 className="cds--productive-heading-04" style={{ marginBottom: '1rem' }}>
+                      Data Validation
+                    </h3>
+                    <p className="cds--body-long-01" style={{ color: '#525252', marginBottom: '2rem' }}>
+                      Validate data integrity between source and target databases with comprehensive 
+                      checksum, row comparison, and count difference analysis.
+                    </p>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <Button kind="primary" size="md">
+                      Start Data Validation
+                    </Button>
+                  </div>
+                </ClickableTile>
+              </Column>
+
+              <Column lg={8} md={4} sm={4} style={{ marginBottom: '2rem' }}>
+                <ClickableTile
+                  className="card-shadow"
+                  style={{ 
+                    height: '350px', 
+                    padding: '2rem',
+                    backgroundColor: 'white',
+                    border: '1px solid #e0e0e0',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                  }}
+                  onClick={() => onNavigate('data-movement')}
+                >
+                  <div style={{ textAlign: 'center', flex: 1 }}>
+                    <Move size={48} style={{ color: '#0f62fe', marginBottom: '1rem' }} />
+                    <h3 className="cds--productive-heading-04" style={{ marginBottom: '1rem' }}>
+                      Data Movement
+                    </h3>
+                    <p className="cds--body-long-01" style={{ color: '#525252', marginBottom: '2rem' }}>
+                      Transfer data efficiently between source and target connections using JDBC 
+                      with comprehensive schema comparison and table management.
+                    </p>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <Button kind="primary" size="md">
+                      Start Data Movement
                     </Button>
                   </div>
                 </ClickableTile>

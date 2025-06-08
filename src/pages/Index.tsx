@@ -3,6 +3,8 @@ import DashboardNav from '../components/DashboardNav';
 import HomePage from '../components/HomePage';
 import DatabaseMigration from '../components/DatabaseMigration';
 import DataStageMigration from '../components/DataStageMigration';
+import DataValidation from '../components/DataValidation';
+import DataMovement from '../components/DataMovement';
 import SidebarNav from '../components/SidebarNav';
 import Footer from '../components/Footer';
 import TeradataMigrationQuestionnaire from '../components/questionnaires/TeradataMigrationQuestionnaire';
@@ -27,6 +29,10 @@ const Index = () => {
         return <DatabaseMigration />;
       case 'datastage-migration':
         return <DataStageMigration />;
+      case 'data-validation':
+        return <DataValidation onNavigate={setCurrentPage} />;
+      case 'data-movement':
+        return <DataMovement onNavigate={setCurrentPage} />;
       case 'questionnaire-teradata-migration':
         return <TeradataMigrationQuestionnaire onNavigate={setCurrentPage} />;
       case 'questionnaire-hadoop-modernization':
