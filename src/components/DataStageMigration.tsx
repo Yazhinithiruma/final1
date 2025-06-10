@@ -87,7 +87,7 @@ const DataStageMigration: React.FC = () => {
             {/* Header */}
             <div style={{ marginBottom: '3rem' }}>
               <h1 className="cds--productive-heading-06" style={{ marginBottom: '1rem' }}>
-                DataStage Migration
+                DataStage Modernization
               </h1>
               <p className="cds--body-long-02" style={{ color: '#525252' }}>
                 Convert and migrate your ETL processes from various platforms to IBM DataStage

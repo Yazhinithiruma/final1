@@ -31,21 +31,37 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [validationResults, setValidationResults] = useState(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [columnSelectionType, setColumnSelectionType] = useState('');
   
   const [formData, setFormData] = useState({
-    // Single Table
-    sourceConnection: '',
+    // Single Table - Source
+    sourceDatabaseType: '',
+    sourceHost: '',
+    sourcePort: '',
+    sourceUsername: '',
+    sourcePassword: '',
+    sourceDatabaseName: '',
+    sourceUrl: '',
     sourceSchema: '',
     sourceTable: '',
     sourceFile: null,
-    targetConnection: '',
+    
+    // Single Table - Target
+    targetDatabaseType: '',
+    targetHost: '',
+    targetPort: '',
+    targetUsername: '',
+    targetPassword: '',
+    targetDatabaseName: '',
+    targetUrl: '',
     targetSchema: '',
     targetTable: '',
     targetFile: null,
+    
     includeColumns: [],
     excludeColumns: [],
     enableChecksum: false,
-    checksumType: 'MD5',
+    checksumType: 'SHA2',
     enableRowCount: false,
     
     // Full Schema
@@ -58,7 +74,7 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
     validationLevel: '',
     maxConcurrentTables: 1,
     enableSchemaChecksum: false,
-    schemaChecksumType: 'MD5',
+    schemaChecksumType: 'SHA2',
     enableSchemaRowCount: false,
   });
 
@@ -95,6 +111,12 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
     }, 3000);
   };
 
+  const databaseTypeOptions = [
+    { id: '', text: 'Select Option' },
+    { id: 'teradata', text: 'Teradata' },
+    { id: 'sqlserver', text: 'SQL Server' },
+  ];
+
   const connectionOptions = [
     { id: 'select', text: 'Select Connection' },
     { id: 'production', text: 'Production DB' },
@@ -127,6 +149,12 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
     { id: 'status', text: 'Status' },
   ];
 
+  const columnSelectionOptions = [
+    { id: '', text: 'Select Option' },
+    { id: 'include', text: 'Include Columns' },
+    { id: 'exclude', text: 'Exclude Columns' },
+  ];
+
   const patternOptions = [
     { id: 'user*', text: 'user*' },
     { id: 'order*', text: 'order*' },
@@ -149,17 +177,66 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
         <Grid>
           <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <Select
-              id="source-connection"
-              labelText="Connection"
-              value={formData.sourceConnection}
-              onChange={(e) => handleInputChange('sourceConnection', (e.target as HTMLSelectElement).value)}
+              id="source-database-type"
+              labelText="Database Type"
+              value={formData.sourceDatabaseType}
+              onChange={(e) => handleInputChange('sourceDatabaseType', (e.target as HTMLSelectElement).value)}
             >
-              {connectionOptions.map(option => (
+              {databaseTypeOptions.map(option => (
                 <SelectItem key={option.id} value={option.id} text={option.text} />
               ))}
             </Select>
           </Column>
           <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
+              id="source-host"
+              labelText="Host/Server"
+              value={formData.sourceHost}
+              onChange={(e) => handleInputChange('sourceHost', e.target.value)}
+            />
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
+              id="source-port"
+              labelText="Port"
+              value={formData.sourcePort}
+              onChange={(e) => handleInputChange('sourcePort', e.target.value)}
+            />
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
+              id="source-database-name"
+              labelText="Database Name"
+              value={formData.sourceDatabaseName}
+              onChange={(e) => handleInputChange('sourceDatabaseName', e.target.value)}
+            />
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
+              id="source-username"
+              labelText="Username"
+              value={formData.sourceUsername}
+              onChange={(e) => handleInputChange('sourceUsername', e.target.value)}
+            />
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
+              id="source-password"
+              labelText="Password"
+              type="password"
+              value={formData.sourcePassword}
+              onChange={(e) => handleInputChange('sourcePassword', e.target.value)}
+            />
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
+              id="source-url"
+              labelText="URL"
+              value={formData.sourceUrl}
+              onChange={(e) => handleInputChange('sourceUrl', e.target.value)}
+            />
+          </Column>
+          {/* <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <Select
               id="source-schema"
               labelText="Schema"
@@ -170,8 +247,8 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
                 <SelectItem key={option.id} value={option.id} text={option.text} />
               ))}
             </Select>
-          </Column>
-          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+          </Column> */}
+          {/* <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <Select
               id="source-table"
               labelText="Table"
@@ -182,8 +259,8 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
                 <SelectItem key={option.id} value={option.id} text={option.text} />
               ))}
             </Select>
-          </Column>
-          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+          </Column> */}
+          {/* <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <FileUploader
               labelTitle="Or Upload File"
               labelDescription="CSV or Excel files only"
@@ -193,7 +270,7 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
               multiple={false}
               onChange={(e) => handleInputChange('sourceFile', e.target.files[0])}
             />
-          </Column>
+          </Column> */}
         </Grid>
       </Tile>
 
@@ -205,17 +282,66 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
         <Grid>
           <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <Select
-              id="target-connection"
-              labelText="Connection"
-              value={formData.targetConnection}
-              onChange={(e) => handleInputChange('targetConnection', (e.target as HTMLSelectElement).value)}
+              id="target-database-type"
+              labelText="Database Type"
+              value={formData.targetDatabaseType}
+              onChange={(e) => handleInputChange('targetDatabaseType', (e.target as HTMLSelectElement).value)}
             >
-              {connectionOptions.map(option => (
+              {databaseTypeOptions.map(option => (
                 <SelectItem key={option.id} value={option.id} text={option.text} />
               ))}
             </Select>
           </Column>
           <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
+              id="target-host"
+              labelText="Host/Server"
+              value={formData.targetHost}
+              onChange={(e) => handleInputChange('targetHost', e.target.value)}
+            />
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
+              id="target-port"
+              labelText="Port"
+              value={formData.targetPort}
+              onChange={(e) => handleInputChange('targetPort', e.target.value)}
+            />
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
+              id="target-database-name"
+              labelText="Database Name"
+              value={formData.targetDatabaseName}
+              onChange={(e) => handleInputChange('targetDatabaseName', e.target.value)}
+            />
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
+              id="target-username"
+              labelText="Username"
+              value={formData.targetUsername}
+              onChange={(e) => handleInputChange('targetUsername', e.target.value)}
+            />
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
+              id="target-password"
+              labelText="Password"
+              type="password"
+              value={formData.targetPassword}
+              onChange={(e) => handleInputChange('targetPassword', e.target.value)}
+            />
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
+              id="target-url"
+              labelText="URL"
+              value={formData.targetUrl}
+              onChange={(e) => handleInputChange('targetUrl', e.target.value)}
+            />
+          </Column>
+          {/* <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <Select
               id="target-schema"
               labelText="Schema"
@@ -249,7 +375,7 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
               multiple={false}
               onChange={(e) => handleInputChange('targetFile', e.target.files[0])}
             />
-          </Column>
+          </Column> */}
         </Grid>
       </Tile>
 
@@ -260,29 +386,51 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
         </h3>
         <Grid>
           <Column lg={8} md={4} sm={4} style={{ marginBottom: '1rem' }}>
-            <MultiSelect
-              id="include-columns"
-              titleText="Include Columns"
-              label="Select columns to include"
-              items={columnOptions}
-              itemToString={(item) => (item ? item.text : '')}
-              onChange={({ selectedItems }) => 
-                handleInputChange('includeColumns', selectedItems.map(item => item.id))
-              }
-            />
+            <Select
+              id="column-selection-type"
+              labelText="Column Selection Type"
+              value={columnSelectionType}
+              onChange={(e) => {
+                const value = (e.target as HTMLSelectElement).value;
+                setColumnSelectionType(value);
+                // Reset column selections when type changes
+                handleInputChange('includeColumns', []);
+                handleInputChange('excludeColumns', []);
+              }}
+            >
+              {columnSelectionOptions.map(option => (
+                <SelectItem key={option.id} value={option.id} text={option.text} />
+              ))}
+            </Select>
           </Column>
-          <Column lg={8} md={4} sm={4} style={{ marginBottom: '1rem' }}>
-            <MultiSelect
-              id="exclude-columns"
-              titleText="Exclude Columns"
-              label="Select columns to exclude"
-              items={columnOptions}
-              itemToString={(item) => (item ? item.text : '')}
-              onChange={({ selectedItems }) => 
-                handleInputChange('excludeColumns', selectedItems.map(item => item.id))
-              }
-            />
-          </Column>
+          {columnSelectionType === 'include' && (
+            <Column lg={8} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+              <MultiSelect
+                id="include-columns"
+                titleText="Include Columns"
+                label="Select columns to include"
+                items={columnOptions}
+                itemToString={(item) => (item ? item.text : '')}
+                onChange={({ selectedItems }) => 
+                  handleInputChange('includeColumns', selectedItems.map(item => item.id))
+                }
+              />
+            </Column>
+          )}
+          {columnSelectionType === 'exclude' && (
+            <Column lg={8} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+              <MultiSelect
+                id="exclude-columns"
+                titleText="Exclude Columns"
+                label="Select columns to exclude"
+                items={columnOptions}
+                itemToString={(item) => (item ? item.text : '')}
+                onChange={({ selectedItems }) => 
+                  handleInputChange('excludeColumns', selectedItems.map(item => item.id))
+                }
+              />
+            </Column>
+          )}
         </Grid>
       </Tile>
 
@@ -300,17 +448,14 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
               onToggle={(toggled) => handleInputChange('enableChecksum', toggled)}
             />
             {formData.enableChecksum && (
-              <Select
-                id="checksum-type"
-                labelText="Hash Type"
-                value={formData.checksumType}
-                onChange={(e) => handleInputChange('checksumType', (e.target as HTMLSelectElement).value)}
-                style={{ marginTop: '1rem' }}
-              >
-                <SelectItem value="MD5" text="MD5" />
-                <SelectItem value="SHA1" text="SHA1" />
-                <SelectItem value="SHA256" text="SHA256" />
-              </Select>
+              <div style={{ marginTop: '1rem' }}>
+                <TextInput
+                  id="checksum-type"
+                  labelText="Hash Type"
+                  value="SHA2"
+                  readOnly
+                />
+              </div>
             )}
           </Column>
           <Column lg={8} md={4} sm={4} style={{ marginBottom: '1rem' }}>
@@ -480,17 +625,14 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
               onToggle={(toggled) => handleInputChange('enableSchemaChecksum', toggled)}
             />
             {formData.enableSchemaChecksum && (
-              <Select
-                id="schema-checksum-type"
-                labelText="Hash Type"
-                value={formData.schemaChecksumType}
-                onChange={(e) => handleInputChange('schemaChecksumType', (e.target as HTMLSelectElement).value)}
-                style={{ marginTop: '1rem' }}
-              >
-                <SelectItem value="MD5" text="MD5" />
-                <SelectItem value="SHA1" text="SHA1" />
-                <SelectItem value="SHA256" text="SHA256" />
-              </Select>
+              <div style={{ marginTop: '1rem' }}>
+                <TextInput
+                  id="schema-checksum-type"
+                  labelText="Hash Type"
+                  value="SHA2"
+                  readOnly
+                />
+              </div>
             )}
           </Column>
         </Grid>
