@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Grid,
@@ -192,7 +191,7 @@ const DataValidationDashboard: React.FC<DataValidationDashboardProps> = ({
                                       kind="ghost" 
                                       size="sm" 
                                       renderIcon={Settings}
-                                      onClick={() => onNavigate('data-validation')}
+                                      onClick={() => onNavigate('data-validation-tool')}
                                     >
                                       Configure
                                     </Button>

@@ -19,6 +19,7 @@ const Index = () => {
   const [currentPage, setCurrentPage] = useState('home');
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [validationResults, setValidationResults] = useState(null);
+  const [currentWorkspace, setCurrentWorkspace] = useState(null);
 
   // Mock validation results data
   const mockValidationResults = {
@@ -42,6 +43,7 @@ const Index = () => {
 
   const handleCreateWorkspace = (workspaceData: any) => {
     console.log('Creating workspace:', workspaceData);
+    setCurrentWorkspace(workspaceData);
     setCurrentPage('data-validation-tool');
   };
 
@@ -72,7 +74,13 @@ const Index = () => {
           />
         );
       case 'data-validation-tool':
-        return <DataValidation onNavigate={setCurrentPage} onCompareData={handleCompareData} />;
+        return (
+          <DataValidation 
+            onNavigate={setCurrentPage} 
+            onCompareData={handleCompareData}
+            workspaceData={currentWorkspace}
+          />
+        );
       case 'validation-results':
         return (
           <ValidationResults 
