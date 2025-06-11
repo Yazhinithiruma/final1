@@ -200,6 +200,14 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate, onCompareDa
           </Column>
           <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <TextInput
+              id="source-database-name"
+              labelText="Database Name"
+              value={formData.sourceDatabaseName}
+              onChange={(e) => handleInputChange('sourceDatabaseName', e.target.value)}
+            />
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
               id="source-username"
               labelText="Username"
               value={formData.sourceUsername}
@@ -217,21 +225,13 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate, onCompareDa
           </Column>
           <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <TextInput
-              id="source-database-name"
-              labelText="Database Name"
-              value={formData.sourceDatabaseName}
-              onChange={(e) => handleInputChange('sourceDatabaseName', e.target.value)}
-            />
-          </Column>
-          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
-            <TextInput
               id="source-url"
               labelText="URL"
               value={formData.sourceUrl}
               onChange={(e) => handleInputChange('sourceUrl', e.target.value)}
             />
           </Column>
-          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+          {/* <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <Select
               id="source-schema"
               labelText="Schema"
@@ -265,7 +265,7 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate, onCompareDa
               multiple={false}
               onChange={(e) => handleInputChange('sourceFile', e.target.files[0])}
             />
-          </Column>
+          </Column> */}
         </Grid>
       </Tile>
 
@@ -305,6 +305,14 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate, onCompareDa
           </Column>
           <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <TextInput
+              id="target-database-name"
+              labelText="Database Name"
+              value={formData.targetDatabaseName}
+              onChange={(e) => handleInputChange('targetDatabaseName', e.target.value)}
+            />
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
               id="target-username"
               labelText="Username"
               value={formData.targetUsername}
@@ -322,21 +330,13 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate, onCompareDa
           </Column>
           <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <TextInput
-              id="target-database-name"
-              labelText="Database Name"
-              value={formData.targetDatabaseName}
-              onChange={(e) => handleInputChange('targetDatabaseName', e.target.value)}
-            />
-          </Column>
-          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
-            <TextInput
               id="target-url"
               labelText="URL"
               value={formData.targetUrl}
               onChange={(e) => handleInputChange('targetUrl', e.target.value)}
             />
           </Column>
-          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+          {/* <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <Select
               id="target-schema"
               labelText="Schema"
@@ -370,7 +370,7 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate, onCompareDa
               multiple={false}
               onChange={(e) => handleInputChange('targetFile', e.target.files[0])}
             />
-          </Column>
+          </Column> */}
         </Grid>
       </Tile>
 
