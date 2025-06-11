@@ -128,7 +128,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                     flexDirection: 'column',
                     justifyContent: 'space-between'
                   }}
-                  onClick={() => onNavigate('data-validation')}
+                  onClick={() => onNavigate('data-validation-dashboard')}
                 >
                   <div style={{ textAlign: 'center', flex: 1 }}>
                     <CheckmarkOutline size={48} style={{ color: '#0f62fe', marginBottom: '1rem' }} />

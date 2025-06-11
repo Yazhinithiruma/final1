@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Grid,
@@ -21,20 +20,20 @@ import {
   NumberInput,
 } from '@carbon/react';
 import ValidationResults from './ValidationResults';
+import DataValidationDashboard from './DataValidationDashboard';
 
 interface DataValidationProps {
   onNavigate: (page: string) => void;
+  onCompareData?: () => void;
 }
 
-const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
+const DataValidation: React.FC<DataValidationProps> = ({ onNavigate, onCompareData }) => {
   const [comparisonType, setComparisonType] = useState('single');
   const [isLoading, setIsLoading] = useState(false);
-  const [validationResults, setValidationResults] = useState(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [columnSelectionType, setColumnSelectionType] = useState('');
   
   const [formData, setFormData] = useState({
-    // Single Table - Source
     sourceDatabaseType: '',
     sourceHost: '',
     sourcePort: '',
@@ -93,22 +92,18 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
   };
 
   const handleValidation = async () => {
-    setIsLoading(true);
+    handleCompareData();
+  };
+
+  const handleCompareData = () => {
+    console.log('Comparing data with configuration:', {
+      comparisonType,
+      formData
+    });
     
-    setTimeout(() => {
-      setValidationResults({
-        totalRows: 1000,
-        matchingRows: 950,
-        mismatchedRows: 50,
-        countDifference: formData.enableRowCount ? 5 : 0,
-        checksumMatch: formData.enableChecksum ? true : null,
-        details: [
-          { id: 1, column: 'user_id', source: '12345', target: '12346', status: 'mismatch' },
-          { id: 2, column: 'email', source: 'test@test.com', target: 'test@test.com', status: 'match' },
-        ]
-      });
-      setIsLoading(false);
-    }, 3000);
+    if (onCompareData) {
+      onCompareData();
+    }
   };
 
   const databaseTypeOptions = [
@@ -205,14 +200,6 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
           </Column>
           <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <TextInput
-              id="source-database-name"
-              labelText="Database Name"
-              value={formData.sourceDatabaseName}
-              onChange={(e) => handleInputChange('sourceDatabaseName', e.target.value)}
-            />
-          </Column>
-          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
-            <TextInput
               id="source-username"
               labelText="Username"
               value={formData.sourceUsername}
@@ -230,13 +217,21 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
           </Column>
           <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <TextInput
+              id="source-database-name"
+              labelText="Database Name"
+              value={formData.sourceDatabaseName}
+              onChange={(e) => handleInputChange('sourceDatabaseName', e.target.value)}
+            />
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
               id="source-url"
               labelText="URL"
               value={formData.sourceUrl}
               onChange={(e) => handleInputChange('sourceUrl', e.target.value)}
             />
           </Column>
-          {/* <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <Select
               id="source-schema"
               labelText="Schema"
@@ -247,8 +242,8 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
                 <SelectItem key={option.id} value={option.id} text={option.text} />
               ))}
             </Select>
-          </Column> */}
-          {/* <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <Select
               id="source-table"
               labelText="Table"
@@ -259,8 +254,8 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
                 <SelectItem key={option.id} value={option.id} text={option.text} />
               ))}
             </Select>
-          </Column> */}
-          {/* <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <FileUploader
               labelTitle="Or Upload File"
               labelDescription="CSV or Excel files only"
@@ -270,7 +265,7 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
               multiple={false}
               onChange={(e) => handleInputChange('sourceFile', e.target.files[0])}
             />
-          </Column> */}
+          </Column>
         </Grid>
       </Tile>
 
@@ -310,14 +305,6 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
           </Column>
           <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <TextInput
-              id="target-database-name"
-              labelText="Database Name"
-              value={formData.targetDatabaseName}
-              onChange={(e) => handleInputChange('targetDatabaseName', e.target.value)}
-            />
-          </Column>
-          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
-            <TextInput
               id="target-username"
               labelText="Username"
               value={formData.targetUsername}
@@ -335,13 +322,21 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
           </Column>
           <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <TextInput
+              id="target-database-name"
+              labelText="Database Name"
+              value={formData.targetDatabaseName}
+              onChange={(e) => handleInputChange('targetDatabaseName', e.target.value)}
+            />
+          </Column>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+            <TextInput
               id="target-url"
               labelText="URL"
               value={formData.targetUrl}
               onChange={(e) => handleInputChange('targetUrl', e.target.value)}
             />
           </Column>
-          {/* <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
+          <Column lg={4} md={4} sm={4} style={{ marginBottom: '1rem' }}>
             <Select
               id="target-schema"
               labelText="Schema"
@@ -375,7 +370,7 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
               multiple={false}
               onChange={(e) => handleInputChange('targetFile', e.target.files[0])}
             />
-          </Column> */}
+          </Column>
         </Grid>
       </Tile>
 
@@ -477,7 +472,7 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
       </Tile>
 
       <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-        <Button kind="primary" size="lg" onClick={handleValidation} disabled={isLoading}>
+        <Button kind="primary" onClick={handleValidation} disabled={isLoading}>
           Compare Data
         </Button>
       </div>
@@ -656,15 +651,29 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
       </Tile>
 
       <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-        <Button kind="primary" size="lg" onClick={handleValidation} disabled={isLoading}>
+        <Button kind="primary" onClick={handleValidation} disabled={isLoading}>
           Compare Data
         </Button>
       </div>
     </div>
   );
 
+  const [validationResults, setValidationResults] = useState(null);
+  const [showDashboard, setShowDashboard] = useState(false);
+  const [currentWorkspace, setCurrentWorkspace] = useState(null);
+
   if (validationResults) {
     return <ValidationResults results={validationResults} onNavigate={onNavigate} onReset={() => setValidationResults(null)} />;
+  }
+
+  if (showDashboard) {
+    return (
+      <DataValidationDashboard
+        onNavigate={onNavigate}
+        onCreateWorkspace={setCurrentWorkspace}
+        onBack={() => setShowDashboard(false)}
+      />
+    );
   }
 
   return (
@@ -674,10 +683,10 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate }) => {
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <Button
               kind="ghost"
-              onClick={() => onNavigate('home')}
+              onClick={() => onNavigate('data-validation-dashboard')}
               style={{ marginBottom: '2rem' }}
             >
-              ← Back to Home
+              ← Back to Dashboard
             </Button>
             
             <h1 className="cds--productive-heading-06" style={{ marginBottom: '2rem' }}>
