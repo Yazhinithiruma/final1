@@ -106,7 +106,9 @@ const DataValidation: React.FC<DataValidationProps> = ({ onNavigate, onCompareDa
   const databaseTypeOptions = [
     { id: '', text: 'Select Option' },
     { id: 'teradata', text: 'Teradata' },
+    { id: 'sqlserver', text: 'DB2' },
     { id: 'sqlserver', text: 'SQL Server' },
+    { id: 'sqlserver', text: 'MySQL' },
   ];
 
   const schemaOptions = [
