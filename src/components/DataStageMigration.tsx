@@ -28,7 +28,7 @@ const DataStageMigration: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [showToast, setShowToast] = useState(false);
 
-  const connectionOptions = ['DataStage', 'Informatica', 'SSIS', 'OBIEE', 'MuleSoft', 'Talend'];
+  const connectionOptions = ['Informatica', 'Talend'];
   const fileTypes = ['XML files', '.isx dump files', 'Mapping files', 'Sequence files'];
 
   const handleConversion = () => {
